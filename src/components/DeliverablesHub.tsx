@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { Language } from '../types';
 import { ShieldAlert, FileText, Award, Download, Copy, Check, Presentation, Video, BookOpen, FileCode, CheckCircle2, Sparkles } from 'lucide-react';
 
 interface DeliverablesHubProps {
   highContrast: boolean;
+  currentLang: Language;
 }
 
-export const DeliverablesHub: React.FC<DeliverablesHubProps> = ({ highContrast }) => {
+export const DeliverablesHub: React.FC<DeliverablesHubProps> = ({ highContrast, currentLang }) => {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'all' | 'patent' | 'paper' | 'report' | 'deck'>('all');
 
@@ -14,6 +16,60 @@ export const DeliverablesHub: React.FC<DeliverablesHubProps> = ({ highContrast }
     setCopiedSection(sectionKey);
     setTimeout(() => setCopiedSection(null), 2000);
   };
+
+  const t = {
+    en: {
+      title: 'Academic & Institutional Research Deliverables Hub',
+      subtitle: 'Official IPR Patent Drafts, IEEE Conference Manuscript, Institutional Review Board (IRB) Protocols, and Slide Deck Artifacts.',
+      tabAll: 'All Documents',
+      tabPatent: 'IPR Patent Draft',
+      tabPaper: 'IEEE Paper Manuscript',
+      tabReport: 'Clinical Trial Protocol',
+      tabDeck: 'Defense Slide Deck',
+      btnCopy: 'Copy Text',
+      btnCopied: 'Copied to Clipboard!',
+      patentTitle: 'Indian Patent Claim Draft (IPR Cell Submission)',
+      patentSubtitle: 'Form-2 Specification • Provisional / Complete Patent Specification',
+      paperTitle: 'IEEE Conference Research Manuscript',
+      paperSubtitle: 'Peer-Reviewed Manuscript Submission for Rural Healthcare AI',
+      clinicalProtocolTitle: 'Rural Clinical Validation & IRB Safety Framework',
+      defenseDeckTitle: 'Project Evaluation Presentation Outline'
+    },
+    hi: {
+      title: 'अकादमिक व पेटेंट अनुसंधान दस्तावेज केंद्र',
+      subtitle: 'आधिकारिक पेटेंट ड्राफ्ट, आईईईई शोध पत्र पांडुलिपि, क्लिनिकल ट्रायल प्रोटोकॉल और प्रस्तुति स्लाइड सामग्री।',
+      tabAll: 'सभी दस्तावेज',
+      tabPatent: 'पेटेंट ड्राफ्ट',
+      tabPaper: 'IEEE शोध पत्र',
+      tabReport: 'क्लिनिकल ट्रायल रिपोर्ट',
+      tabDeck: 'प्रोजेक्ट प्रेजेंटेशन',
+      btnCopy: 'कॉपी करें',
+      btnCopied: 'कॉपी हो गया!',
+      patentTitle: 'भारतीय पेटेंट दावा प्रारूप (आईपीआर सेल)',
+      patentSubtitle: 'फॉर्म-2 पेटेंट विनिर्देश • मल्टीमॉडल एआई प्राथमिक उपचार प्रणाली',
+      paperTitle: 'IEEE शोध सम्मेलन पांडुलिपि',
+      paperSubtitle: 'ग्रामीण स्वास्थ्य में विजन-लैंग्वेज मॉडल का अनुप्रयोग',
+      clinicalProtocolTitle: 'ग्रामीण नैदानिक सत्यापन व सुरक्षा प्रोटोकॉल',
+      defenseDeckTitle: 'प्रोजेक्ट मूल्यांकन व डिफेंस प्रेजेंटेशन'
+    },
+    ta: {
+      title: 'ஆராய்ச்சி மற்றும் காப்புரிமை ஆவண மையம்',
+      subtitle: 'காப்புரிமை வரைவு, IEEE ஆய்வுக் கட்டுரை, மருத்துவ பரிசோதனை நெறிமுறைகள் மற்றும் விளக்கக் காட்சி ஆவணங்கள்.',
+      tabAll: 'அனைத்து ஆவணங்கள்',
+      tabPatent: 'காப்புரிமை வரைவு',
+      tabPaper: 'IEEE ஆய்வுக் கட்டுரை',
+      tabReport: 'மருத்துவ சோதனை நெறிமுறை',
+      tabDeck: 'திட்ட விளக்கக் காட்சி',
+      btnCopy: 'நகலெடு',
+      btnCopied: 'நகலெடுக்கப்பட்டது!',
+      patentTitle: 'இந்திய காப்புரிமை வரைவு ஆவணம்',
+      patentSubtitle: 'படிவம்-2 காப்புரிமை விவரக்குறிப்பு • கிராமப்புற மருத்துவ AI',
+      paperTitle: 'IEEE ஆய்வுக் கட்டுரை கையெழுத்துப் பிரதி',
+      paperSubtitle: 'கிராமப்புற அவசர மருத்துவத்திற்கான AI மாதிரி ஆய்வு',
+      clinicalProtocolTitle: 'மருத்துவ பாதுகாப்பு நெறிமுறைகள்',
+      defenseDeckTitle: 'மதிப்பீட்டு விளக்கக் காட்சி'
+    }
+  }[currentLang];
 
   const patentText = `================================================================================
 PATENT CLAIM DRAFT — IPR CELL SUBMISSION
@@ -61,192 +117,90 @@ KEYWORDS: Vision-Language Model, Medical Triage, Rural Health, LoRA PEFT, Multil
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-indigo-600/10 text-indigo-600 flex items-center justify-center">
-              <FileText className="w-5 h-5" />
+              <Award className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-serif font-bold tracking-tight">
-                Academic Research, Patent Drafts & Deliverables
+                {t.title}
               </h2>
-              <p className="text-xs text-slate-500 dark:text-yellow-400/80 mt-0.5">
-                Complete intellectual property portfolio, IEEE manuscript draft, 50-page IDP dissertation outline, and slide deck
+              <p className="text-xs text-slate-500 dark:text-yellow-400/80 mt-0.5 max-w-3xl">
+                {t.subtitle}
               </p>
             </div>
           </div>
+        </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200">
-              IPR Ready • 2026 Portfolio
-            </span>
-          </div>
+        {/* Tab Filters */}
+        <div className="flex items-center gap-2 mt-4 overflow-x-auto no-scrollbar">
+          {[
+            { id: 'all', label: t.tabAll },
+            { id: 'patent', label: t.tabPatent },
+            { id: 'paper', label: t.tabPaper },
+            { id: 'report', label: t.tabReport },
+            { id: 'deck', label: t.tabDeck }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer shrink-0 ${
+                activeTab === tab.id
+                  ? 'bg-slate-900 text-white font-bold'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
-        {[
-          { id: 'all', label: 'All Deliverables' },
-          { id: 'patent', label: '📜 Patent Claims Draft' },
-          { id: 'paper', label: '📑 IEEE Transactions Paper' },
-          { id: 'report', label: '📖 50-Page IDP Dissertation' },
-          { id: 'deck', label: '📊 15-Slide Presentation Deck' }
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
-            className={`px-3.5 py-1.5 rounded-full font-bold whitespace-nowrap transition cursor-pointer border text-xs ${
-              activeTab === tab.id
-                ? highContrast
-                  ? 'bg-yellow-400 text-black border-yellow-500 font-bold'
-                  : 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                : highContrast
-                  ? 'bg-zinc-900 border-yellow-400/50 text-yellow-300'
-                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Deliverable Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
-        {/* Deliverable 1: Patent Claim Draft */}
-        {(activeTab === 'all' || activeTab === 'patent') && (
-          <div className={`p-5 sm:p-6 rounded-3xl border space-y-3.5 flex flex-col justify-between transition ${
-            highContrast ? 'bg-black border-yellow-400/60' : 'bg-slate-50 border-slate-200/80 hover:border-slate-300'
-          }`}>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border flex items-center gap-1 uppercase tracking-wider bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border-amber-200">
-                  <Award className="w-3.5 h-3.5 text-amber-600" />
-                  Patent Application (IPR Cell)
-                </span>
-                <button
-                  onClick={() => copyToClipboard(patentText, 'patent')}
-                  className={`text-xs flex items-center gap-1.5 cursor-pointer px-3 py-1 rounded-full font-bold uppercase tracking-wider transition ${
-                    highContrast
-                      ? 'bg-yellow-400 text-black font-bold'
-                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 shadow-2xs'
-                  }`}
-                >
-                  {copiedSection === 'patent' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedSection === 'patent' ? 'Copied' : 'Copy Draft'}</span>
-                </button>
-              </div>
-
-              <h3 className="text-base font-serif font-bold text-slate-900 dark:text-yellow-300">
-                Patent Draft: Unified Multilingual Wound Triage VLM Pipeline
+      {/* Document 1: Patent Draft */}
+      {(activeTab === 'all' || activeTab === 'patent') && (
+        <div className="p-5 rounded-2xl border border-slate-200 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 text-indigo-600" />
+              <h3 className="font-bold text-sm text-slate-900 dark:text-yellow-300">
+                {t.patentTitle}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-yellow-400/70 mt-1 leading-relaxed">
-                Covers novel unified pipeline combining image recognition, 3-tier severity grading, multilingual first-aid generation, and offline edge execution.
-              </p>
-
-              <pre className={`mt-3 p-3.5 rounded-2xl border text-[10px] font-mono overflow-x-auto max-h-48 leading-relaxed ${
-                highContrast ? 'bg-zinc-900 border-yellow-400/40 text-yellow-200' : 'bg-white border-slate-200 text-slate-800'
-              }`}>
-                {patentText}
-              </pre>
             </div>
+            <button
+              onClick={() => copyToClipboard(patentText, 'patent')}
+              className="flex items-center gap-1 text-xs text-indigo-600 hover:underline font-semibold cursor-pointer"
+            >
+              {copiedSection === 'patent' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copiedSection === 'patent' ? t.btnCopied : t.btnCopy}</span>
+            </button>
           </div>
-        )}
+          <pre className="p-4 rounded-xl bg-slate-900 text-slate-200 font-mono text-[11px] overflow-x-auto max-h-56 leading-relaxed">
+            {patentText}
+          </pre>
+        </div>
+      )}
 
-        {/* Deliverable 2: IEEE Research Paper Abstract */}
-        {(activeTab === 'all' || activeTab === 'paper') && (
-          <div className={`p-5 sm:p-6 rounded-3xl border space-y-3.5 flex flex-col justify-between transition ${
-            highContrast ? 'bg-black border-yellow-400/60' : 'bg-slate-50 border-slate-200/80 hover:border-slate-300'
-          }`}>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border flex items-center gap-1 uppercase tracking-wider bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300 border-sky-200">
-                  <FileText className="w-3.5 h-3.5 text-sky-600" />
-                  IEEE Manuscript Draft
-                </span>
-                <button
-                  onClick={() => copyToClipboard(ieeePaperAbstract, 'ieee')}
-                  className={`text-xs flex items-center gap-1.5 cursor-pointer px-3 py-1 rounded-full font-bold uppercase tracking-wider transition ${
-                    highContrast
-                      ? 'bg-yellow-400 text-black font-bold'
-                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 shadow-2xs'
-                  }`}
-                >
-                  {copiedSection === 'ieee' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedSection === 'ieee' ? 'Copied' : 'Copy Abstract'}</span>
-                </button>
-              </div>
-
-              <h3 className="text-base font-serif font-bold text-slate-900 dark:text-yellow-300">
-                IEEE Paper: WoundCare-VLM: Multilingual Offline Wound Triage
+      {/* Document 2: IEEE Paper Abstract */}
+      {(activeTab === 'all' || activeTab === 'paper') && (
+        <div className="p-5 rounded-2xl border border-slate-200 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-sky-600" />
+              <h3 className="font-bold text-sm text-slate-900 dark:text-yellow-300">
+                {t.paperTitle}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-yellow-400/70 mt-1 leading-relaxed">
-                Camera-ready research paper formatted according to IEEE double-column transactions specifications.
-              </p>
-
-              <pre className={`mt-3 p-3.5 rounded-2xl border text-[10px] font-mono overflow-x-auto max-h-48 leading-relaxed ${
-                highContrast ? 'bg-zinc-900 border-yellow-400/40 text-yellow-200' : 'bg-white border-slate-200 text-slate-800'
-              }`}>
-                {ieeePaperAbstract}
-              </pre>
             </div>
+            <button
+              onClick={() => copyToClipboard(ieeePaperAbstract, 'paper')}
+              className="flex items-center gap-1 text-xs text-sky-600 hover:underline font-semibold cursor-pointer"
+            >
+              {copiedSection === 'paper' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copiedSection === 'paper' ? t.btnCopied : t.btnCopy}</span>
+            </button>
           </div>
-        )}
-
-      </div>
-
-      {/* 50-Page IDP Report & 15-Slide Presentation Outlines */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
-        {/* IDP Report Structure */}
-        {(activeTab === 'all' || activeTab === 'report') && (
-          <div className={`p-5 sm:p-6 rounded-3xl border space-y-3 ${
-            highContrast ? 'bg-black border-yellow-400/60' : 'bg-slate-50 border-slate-200/80'
-          }`}>
-            <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400">
-              <BookOpen className="w-4 h-4" />
-              <span>IDP Project Report Outline (50+ Pages)</span>
-            </h4>
-            <ol className="text-xs space-y-2 list-decimal pl-4 leading-relaxed text-slate-700 dark:text-yellow-300">
-              <li><strong>Chapter 1:</strong> Introduction, Problem Statement in Rural India & Gaps in Medical Infrastructure.</li>
-              <li><strong>Chapter 2:</strong> Literature Review on VLMs (BLIP-2, LLaVA, Flamingo, Med-CLIP).</li>
-              <li><strong>Chapter 3:</strong> Indian Skin Tone Wound Dataset Collection, Annotation & Preprocessing.</li>
-              <li><strong>Chapter 4:</strong> Model Architecture (ViT-G + Q-Former + OPT-2.7B) & LoRA Fine-Tuning.</li>
-              <li><strong>Chapter 5:</strong> Multilingual Pipeline (English, Hindi, Tamil) & Myth-Buster Heuristics.</li>
-              <li><strong>Chapter 6:</strong> Evaluation Benchmarks, Confusion Matrix, & Ablation Studies.</li>
-              <li><strong>Chapter 7:</strong> Patent Claims, Ethics, & Conclusion.</li>
-            </ol>
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-zinc-800 text-slate-800 dark:text-yellow-400/90 text-xs leading-relaxed border border-slate-200">
+            <p className="font-semibold">{ieeePaperAbstract}</p>
           </div>
-        )}
-
-        {/* 15-Slide Presentation Deck Outline */}
-        {(activeTab === 'all' || activeTab === 'deck') && (
-          <div className={`p-5 sm:p-6 rounded-3xl border space-y-3 ${
-            highContrast ? 'bg-black border-yellow-400/60' : 'bg-slate-50 border-slate-200/80'
-          }`}>
-            <h4 className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 text-amber-700 dark:text-amber-400">
-              <Presentation className="w-4 h-4" />
-              <span>15-Slide Pitch Deck Structure</span>
-            </h4>
-            <ol className="text-xs space-y-1.5 list-decimal pl-4 leading-relaxed text-slate-700 dark:text-yellow-300">
-              <li><strong>Slide 1:</strong> Title & Team (WoundCare-VLM for Rural First-Aid)</li>
-              <li><strong>Slide 2:</strong> The Rural Medical Crisis in South Asia</li>
-              <li><strong>Slide 3:</strong> Existing Gaps & Why Current Vision Models Fail</li>
-              <li><strong>Slide 4:</strong> Solution Overview: Image -&gt; Severity -&gt; Multilingual First Aid</li>
-              <li><strong>Slide 5:</strong> Architecture: ViT-G + Q-Former + OPT-2.7B</li>
-              <li><strong>Slide 6:</strong> LoRA Parameter-Efficient Fine-Tuning on T4 GPU</li>
-              <li><strong>Slide 7:</strong> Dataset Diversity & Annotation Protocol</li>
-              <li><strong>Slide 8:</strong> Live Demo: Multi-Class Wound Analysis</li>
-              <li><strong>Slide 9:</strong> Multilingual Support (English, Hindi, Tamil)</li>
-              <li><strong>Slide 10:</strong> Offline Edge Deployment (&lt;350ms Latency)</li>
-              <li><strong>Slide 11:</strong> Quantitative Results & F1-Score Benchmarks</li>
-              <li><strong>Slide 12:</strong> Patent Claims & VIT IPR Submission Status</li>
-              <li><strong>Slide 13:</strong> Rural Field Deployment Strategy (PHC Partnership)</li>
-              <li><strong>Slide 14:</strong> Future Scope: Thermal Imaging & Tele-Dermatology</li>
-              <li><strong>Slide 15:</strong> Q&amp;A & Thank You</li>
-            </ol>
-          </div>
-        )}
-
-      </div>
+        </div>
+      )}
 
     </div>
   );
