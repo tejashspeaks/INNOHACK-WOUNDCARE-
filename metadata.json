@@ -1,0 +1,10 @@
+{
+  "name": "Innohack WoundCare VLM",
+  "description": "AI Vision-Language Model for rural wound classification, severity grading, and multilingual first-aid triage (English, Hindi, Tamil) with offline capability.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

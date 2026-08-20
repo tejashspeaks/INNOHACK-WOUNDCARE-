@@ -1,0 +1,198 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.45);
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.glass-panel-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+}
+
+/* Advanced HUD Laser Sweep Animation */
+@keyframes laser-sweep {
+  0% {
+    top: 2%;
+    opacity: 0.85;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+  }
+  50% {
+    top: 96%;
+    opacity: 1;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 1);
+  }
+  100% {
+    top: 2%;
+    opacity: 0.85;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+  }
+}
+
+.animate-laser-sweep {
+  animation: laser-sweep 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Radar Pulse / Ping Animation */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 14px rgba(220, 38, 38, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+.animate-radar-pulse {
+  animation: radar-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Green Clinical Pulse */
+@keyframes green-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-green-pulse {
+  animation: green-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Audio Waveform Equalizer */
+@keyframes audio-wave-1 {
+  0%, 100% { height: 4px; }
+  50% { height: 18px; }
+}
+@keyframes audio-wave-2 {
+  0%, 100% { height: 16px; }
+  50% { height: 6px; }
+}
+@keyframes audio-wave-3 {
+  0%, 100% { height: 8px; }
+  50% { height: 20px; }
+}
+@keyframes audio-wave-4 {
+  0%, 100% { height: 14px; }
+  50% { height: 4px; }
+}
+
+.animate-audio-1 { animation: audio-wave-1 0.65s ease-in-out infinite; }
+.animate-audio-2 { animation: audio-wave-2 0.55s ease-in-out infinite 0.15s; }
+.animate-audio-3 { animation: audio-wave-3 0.75s ease-in-out infinite 0.3s; }
+.animate-audio-4 { animation: audio-wave-4 0.6s ease-in-out infinite 0.45s; }
+
+/* Shimmer Highlight Effect */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-shimmer {
+  animation: shimmer-sweep 2.8s infinite linear;
+}
+
+/* Reticle Spin */
+@keyframes reticle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-reticle-spin {
+  animation: reticle-spin 14s linear infinite;
+}
+
+/* Subtle Floating Animation */
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-subtle-float {
+  animation: subtle-float 3.5s ease-in-out infinite;
+}
+
+/* Grid Background for Medical Viewfinder */
+.medical-grid-bg {
+  background-image: 
+    linear-gradient(rgba(14, 165, 233, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.medical-grid-dark {
+  background-image: 
+    linear-gradient(rgba(234, 179, 8, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 179, 8, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Corner Reticle Markers */
+.hud-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(16, 185, 129, 0.85);
+  pointer-events: none;
+}
+.hud-corner-tl { top: 12px; left: 12px; border-top-width: 2.5px; border-left-width: 2.5px; }
+.hud-corner-tr { top: 12px; right: 12px; border-top-width: 2.5px; border-right-width: 2.5px; }
+.hud-corner-bl { bottom: 12px; left: 12px; border-bottom-width: 2.5px; border-left-width: 2.5px; }
+.hud-corner-br { bottom: 12px; right: 12px; border-bottom-width: 2.5px; border-right-width: 2.5px; }
