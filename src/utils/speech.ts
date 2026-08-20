@@ -1,6 +1,8 @@
 // Multilingual Web Speech API utility for Hindi, Tamil, and English medical triage read-aloud
 
-export function getLanguageLocale(lang: 'en' | 'hi' | 'ta'): string {
+import { Language } from '../types';
+
+export function getLanguageLocale(lang: Language | string): string {
   switch (lang) {
     case 'hi':
       return 'hi-IN';
@@ -12,7 +14,7 @@ export function getLanguageLocale(lang: 'en' | 'hi' | 'ta'): string {
   }
 }
 
-export function getLanguageName(lang: 'en' | 'hi' | 'ta'): string {
+export function getLanguageName(lang: Language | string): string {
   switch (lang) {
     case 'hi':
       return 'हिन्दी (Hindi)';
@@ -26,7 +28,7 @@ export function getLanguageName(lang: 'en' | 'hi' | 'ta'): string {
 
 export function speakText(
   text: string,
-  lang: 'en' | 'hi' | 'ta',
+  lang: Language | string,
   onStart?: () => void,
   onEnd?: () => void
 ): Promise<void> {

@@ -5,14 +5,14 @@ import { Sparkles, Cpu, Layers, BarChart2, Zap, CheckCircle2, Server, Database, 
 
 interface ModelArchitectureAndMetricsProps {
   highContrast: boolean;
-  currentLang: Language;
+  currentLang?: Language;
 }
 
 export const ModelArchitectureAndMetrics: React.FC<ModelArchitectureAndMetricsProps> = ({ 
   highContrast,
-  currentLang 
+  currentLang = 'en' 
 }) => {
-  const t = {
+  const dictionary = {
     en: {
       title: 'BLIP-2 LoRA Vision-Language Architecture',
       subtitle: 'Parameter-efficient multimodal triage model fine-tuned on 6,400+ clinical South Asian wound photos (Fitzpatrick IV–VI)',
@@ -85,7 +85,9 @@ export const ModelArchitectureAndMetrics: React.FC<ModelArchitectureAndMetricsPr
       datasetTitle: 'மருத்துவ தரவுத்தொகுப்பு விவரங்கள் (Fitzpatrick IV–VI)',
       citationTitle: 'கல்வி ஆராய்ச்சி மேற்கோள்'
     }
-  }[currentLang];
+  };
+
+  const t = dictionary[currentLang] || dictionary.en;
 
   const benchmarkModels = [
     { name: 'WoundCare-VLM (BLIP-2 + LoRA)', f1: '92.7%', latency: '340 ms', size: '18.4 MB (INT8)', offline: true, highlight: true },

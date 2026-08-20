@@ -4,10 +4,10 @@ import { ShieldAlert, FileText, Award, Download, Copy, Check, Presentation, Vide
 
 interface DeliverablesHubProps {
   highContrast: boolean;
-  currentLang: Language;
+  currentLang?: Language;
 }
 
-export const DeliverablesHub: React.FC<DeliverablesHubProps> = ({ highContrast, currentLang }) => {
+export const DeliverablesHub: React.FC<DeliverablesHubProps> = ({ highContrast, currentLang = 'en' }) => {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'all' | 'patent' | 'paper' | 'report' | 'deck'>('all');
 
@@ -17,7 +17,7 @@ export const DeliverablesHub: React.FC<DeliverablesHubProps> = ({ highContrast, 
     setTimeout(() => setCopiedSection(null), 2000);
   };
 
-  const t = {
+  const dictionary = {
     en: {
       title: 'Academic & Institutional Research Deliverables Hub',
       subtitle: 'Official IPR Patent Drafts, IEEE Conference Manuscript, Institutional Review Board (IRB) Protocols, and Slide Deck Artifacts.',
@@ -69,7 +69,9 @@ export const DeliverablesHub: React.FC<DeliverablesHubProps> = ({ highContrast, 
       clinicalProtocolTitle: 'மருத்துவ பாதுகாப்பு நெறிமுறைகள்',
       defenseDeckTitle: 'மதிப்பீட்டு விளக்கக் காட்சி'
     }
-  }[currentLang];
+  };
+
+  const t = dictionary[currentLang] || dictionary.en;
 
   const patentText = `================================================================================
 PATENT CLAIM DRAFT — IPR CELL SUBMISSION

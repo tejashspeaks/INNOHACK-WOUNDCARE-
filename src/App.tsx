@@ -490,11 +490,11 @@ export default function App() {
             )}
 
             {activeTab === 'architecture' && (
-              <ModelArchitectureAndMetrics highContrast={highContrast} />
+              <ModelArchitectureAndMetrics highContrast={highContrast} currentLang={currentLang} />
             )}
 
             {activeTab === 'deliverables' && (
-              <DeliverablesHub highContrast={highContrast} />
+              <DeliverablesHub highContrast={highContrast} currentLang={currentLang} />
             )}
 
             {activeTab === 'guide' && (

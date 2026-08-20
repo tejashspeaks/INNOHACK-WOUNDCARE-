@@ -60,7 +60,7 @@ import {
 } from 'lucide-react';
 
 interface EyeDiseaseScannerProps {
-  currentLang: Language;
+  currentLang?: Language;
   useOfflineEngine: boolean;
   highContrast: boolean;
   patientMode: PatientMode;
@@ -133,7 +133,7 @@ const SAMPLE_EYE_CASES: SampleEyeCase[] = [
 ];
 
 export const EyeDiseaseScanner: React.FC<EyeDiseaseScannerProps> = ({
-  currentLang,
+  currentLang = 'en',
   useOfflineEngine,
   highContrast,
   patientMode,
@@ -156,7 +156,7 @@ export const EyeDiseaseScanner: React.FC<EyeDiseaseScannerProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Localization Dictionary
-  const t = {
+  const dictionary = {
     en: {
       heading: 'Ocular & Sclera Disease Screener',
       badge: 'Multimodal AI Vision-Language Triage',
@@ -304,7 +304,9 @@ export const EyeDiseaseScanner: React.FC<EyeDiseaseScannerProps> = ({
       edgeLoRA: 'எட்ஜ் LoRA (0ms)',
       cloudVLM: 'கிளவுட் VLM'
     }
-  }[currentLang];
+  };
+
+  const t = dictionary[currentLang] || dictionary.en;
 
   // Stop audio on unmount or language switch
   useEffect(() => {
@@ -429,11 +431,12 @@ export const EyeDiseaseScanner: React.FC<EyeDiseaseScannerProps> = ({
       stopSpeech();
       setIsPlayingAudio(false);
     } else if (result) {
-      const text = result.clinicalDiagnosisSummary[currentLang] || result.clinicalDiagnosisSummary.en;
+      const activeLang = currentLang || 'en';
+      const text = result.clinicalDiagnosisSummary[activeLang] || result.clinicalDiagnosisSummary.en;
       setIsPlayingAudio(true);
       speakText(
         text,
-        currentLang,
+        activeLang,
         () => setIsPlayingAudio(true),
         () => setIsPlayingAudio(false)
       ).finally(() => setIsPlayingAudio(false));

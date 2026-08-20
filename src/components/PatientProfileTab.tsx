@@ -12,7 +12,7 @@ interface PatientProfileTabProps {
   emergencyContacts: EmergencyContact[];
   onAddContact: (contact: Omit<EmergencyContact, 'id'>) => void;
   onDeleteContact: (id: string) => void;
-  currentLang: Language;
+  currentLang?: Language;
   highContrast?: boolean;
 }
 
@@ -26,14 +26,14 @@ export const PatientProfileTab: React.FC<PatientProfileTabProps> = ({
   emergencyContacts,
   onAddContact,
   onDeleteContact,
-  currentLang,
+  currentLang = 'en',
   highContrast
 }) => {
   const [newContactName, setNewContactName] = useState('');
   const [newContactPhone, setNewContactPhone] = useState('');
   const [newContactRelation, setNewContactRelation] = useState('');
 
-  const t = {
+  const dictionary = {
     en: {
       badge: 'Clinical Safety & Personal Preferences',
       title: 'Patient Medical Profile & Safety Guardrails',
@@ -109,7 +109,9 @@ export const PatientProfileTab: React.FC<PatientProfileTabProps> = ({
       btnAddContact: 'தொடர்பை சேர்',
       noContacts: 'அவசர தொடர்புகள் எதுவும் சேர்க்கப்படவில்லை. அவசர உதவிக்காக எண்களை சேர்க்கவும்.'
     }
-  }[currentLang];
+  };
+
+  const t = dictionary[currentLang] || dictionary.en;
 
   const handleCreateContact = (e: React.FormEvent) => {
     e.preventDefault();
