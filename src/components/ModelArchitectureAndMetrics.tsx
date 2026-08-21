@@ -35,7 +35,7 @@ export const ModelArchitectureAndMetrics: React.FC<ModelArchitectureAndMetricsPr
       colSize: 'Footprint (RAM)',
       colOffline: '100% Offline',
       datasetTitle: 'Clinical Dataset Stratification (Fitzpatrick IV–VI)',
-      citationTitle: 'Academic Citation & IDP Project Reference'
+      citationTitle: 'Academic Citation & Clinical Reference'
     },
     hi: {
       title: 'बीएलआईपी-2 लोरा विजन-लैंग्वेज मॉडल आर्किटेक्चर',
@@ -291,7 +291,7 @@ export const ModelArchitectureAndMetrics: React.FC<ModelArchitectureAndMetricsPr
             <span>{t.citationTitle}</span>
           </h4>
           <p className="font-mono text-[11px] text-slate-600 dark:text-yellow-400/80 leading-relaxed">
-            WoundCare-VLM: Multilingual Vision-Language Model for Offline Rural Triage. IDP Project Ref: VIT-WCV-2026.
+            WoundCare-VLM: Multilingual Vision-Language Model for Offline Rural Triage.
           </p>
         </div>
       </div>

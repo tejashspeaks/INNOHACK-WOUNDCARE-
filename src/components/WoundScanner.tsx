@@ -715,9 +715,9 @@ export const WoundScanner: React.FC<WoundScannerProps> = ({
           ) : analysisResult && (analysisResult.proceed === false || analysisResult.gate_status !== 'WOUND_PRESENT' || analysisResult.isNoWoundDetected) ? (
             /* STAGE 0 INPUT VALIDATION GATE FAIL / INTACT SKIN VIEW ONLY - NO CLINICAL CARDS */
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className={`p-7 rounded-[28px] border space-y-6 transition-all ${
                 highContrast ? 'bg-black border-yellow-400 text-yellow-300' : 'bg-white border-[#e2dfd5] text-[#2c2c2c] shadow-sm'
               }`}
@@ -859,9 +859,9 @@ export const WoundScanner: React.FC<WoundScannerProps> = ({
           ) : analysisResult ? (
             /* Analysis Result Card with Staggered Motion Animations (WOUND_PRESENT ONLY) */
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
               className={`p-7 rounded-[28px] border space-y-6 transition-all ${
                 highContrast ? 'bg-black border-yellow-400 text-yellow-300' : 'bg-white border-[#e2dfd5] text-[#2c2c2c] shadow-sm'
               }`}

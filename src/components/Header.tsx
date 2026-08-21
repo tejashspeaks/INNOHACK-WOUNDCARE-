@@ -358,7 +358,8 @@ export const Header: React.FC<HeaderProps> = ({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className={`lg:hidden border-t px-4 py-3 space-y-1.5 ${
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className={`lg:hidden border-t px-4 py-3 space-y-1.5 overflow-hidden ${
               highContrast ? 'bg-black border-yellow-400 text-yellow-300' : 'bg-slate-50 border-slate-200 text-slate-800'
             }`}
           >
@@ -437,7 +438,7 @@ const TabButton: React.FC<TabButtonProps> = ({ id, active, onClick, icon, label,
       {active && (
         <motion.div
           layoutId="activeTabBadge"
-          transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+          transition={{ type: 'spring', stiffness: 380, damping: 30, mass: 0.7 }}
           className={`absolute inset-0 rounded-full shadow-sm -z-10 ${
             highContrast ? 'bg-yellow-400' : 'bg-slate-900'
           }`}

@@ -368,10 +368,10 @@ export default function App() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
           >
             {activeTab === 'scanner' && (
               <WoundScanner
@@ -623,8 +623,6 @@ export default function App() {
             </span>
             <span>•</span>
             <span>Emergency 108 Direct Triage</span>
-            <span>•</span>
-            <span>IDP Project VIT-WCV-2026</span>
           </div>
         </div>
       </footer>

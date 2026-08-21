@@ -5,6 +5,13 @@
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -22,7 +29,7 @@ body {
   font-family: var(--font-mono);
 }
 
-/* Custom Scrollbar */
+/* Custom Smooth Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -33,9 +40,23 @@ body {
 ::-webkit-scrollbar-thumb {
   background: rgba(100, 116, 139, 0.25);
   border-radius: 9999px;
+  transition: background 0.3s var(--ease-fluid);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 116, 139, 0.45);
+}
+
+/* Smooth Transition Utilities */
+.transition-smooth {
+  transition: all 0.3s var(--ease-fluid);
+}
+
+.transition-transform-smooth {
+  transition: transform 0.35s var(--ease-fluid);
+}
+
+.transition-colors-smooth {
+  transition: background-color 0.3s var(--ease-fluid), border-color 0.3s var(--ease-fluid), color 0.3s var(--ease-fluid);
 }
 
 /* Glassmorphism Classes */
@@ -53,70 +74,73 @@ body {
   border: 1px solid rgba(234, 179, 8, 0.35);
 }
 
-/* Advanced HUD Laser Sweep Animation */
+/* Advanced HUD Laser Sweep Animation - Silky Smooth with GPU Acceleration */
 @keyframes laser-sweep {
   0% {
-    top: 2%;
-    opacity: 0.85;
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+    transform: translateY(0) translateZ(0);
+    opacity: 0.8;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.7);
   }
   50% {
-    top: 96%;
+    transform: translateY(280px) translateZ(0);
     opacity: 1;
-    box-shadow: 0 0 25px rgba(16, 185, 129, 1);
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.95);
   }
   100% {
-    top: 2%;
-    opacity: 0.85;
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+    transform: translateY(0) translateZ(0);
+    opacity: 0.8;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.7);
   }
 }
 
 .animate-laser-sweep {
-  animation: laser-sweep 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: laser-sweep 3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform, opacity;
 }
 
-/* Radar Pulse / Ping Animation */
+/* Radar Pulse / Ping Animation - Smooth Scaling */
 @keyframes radar-pulse {
   0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+    transform: scale(0.96) translateZ(0);
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.65);
   }
-  70% {
-    transform: scale(1);
+  65% {
+    transform: scale(1.02) translateZ(0);
     box-shadow: 0 0 0 14px rgba(220, 38, 38, 0);
   }
   100% {
-    transform: scale(0.95);
+    transform: scale(0.96) translateZ(0);
     box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
   }
 }
 
 .animate-radar-pulse {
-  animation: radar-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  animation: radar-pulse 2.2s infinite cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, box-shadow;
 }
 
 /* Green Clinical Pulse */
 @keyframes green-pulse {
   0% {
-    transform: scale(0.95);
+    transform: scale(0.96) translateZ(0);
     box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
   }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  65% {
+    transform: scale(1.02) translateZ(0);
+    box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
   }
   100% {
-    transform: scale(0.95);
+    transform: scale(0.96) translateZ(0);
     box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
   }
 }
 
 .animate-green-pulse {
-  animation: green-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  animation: green-pulse 2.2s infinite cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, box-shadow;
 }
 
-/* Audio Waveform Equalizer */
+/* Audio Waveform Equalizer - Silky Smooth Rhythm */
 @keyframes audio-wave-1 {
   0%, 100% { height: 4px; }
   50% { height: 18px; }
@@ -134,39 +158,42 @@ body {
   50% { height: 4px; }
 }
 
-.animate-audio-1 { animation: audio-wave-1 0.65s ease-in-out infinite; }
-.animate-audio-2 { animation: audio-wave-2 0.55s ease-in-out infinite 0.15s; }
-.animate-audio-3 { animation: audio-wave-3 0.75s ease-in-out infinite 0.3s; }
-.animate-audio-4 { animation: audio-wave-4 0.6s ease-in-out infinite 0.45s; }
+.animate-audio-1 { animation: audio-wave-1 0.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; will-change: height; }
+.animate-audio-2 { animation: audio-wave-2 0.7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 0.15s; will-change: height; }
+.animate-audio-3 { animation: audio-wave-3 0.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 0.3s; will-change: height; }
+.animate-audio-4 { animation: audio-wave-4 0.75s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 0.45s; will-change: height; }
 
 /* Shimmer Highlight Effect */
 @keyframes shimmer-sweep {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
+  0% { transform: translateX(-100%) translateZ(0); }
+  100% { transform: translateX(200%) translateZ(0); }
 }
 
 .animate-shimmer {
-  animation: shimmer-sweep 2.8s infinite linear;
+  animation: shimmer-sweep 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
-/* Reticle Spin */
+/* Reticle Spin - GPU Accelerated */
 @keyframes reticle-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: rotate(0deg) translateZ(0); }
+  to { transform: rotate(360deg) translateZ(0); }
 }
 
 .animate-reticle-spin {
-  animation: reticle-spin 14s linear infinite;
+  animation: reticle-spin 16s linear infinite;
+  will-change: transform;
 }
 
 /* Subtle Floating Animation */
 @keyframes subtle-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
+  0%, 100% { transform: translateY(0px) translateZ(0); }
+  50% { transform: translateY(-5px) translateZ(0); }
 }
 
 .animate-subtle-float {
-  animation: subtle-float 3.5s ease-in-out infinite;
+  animation: subtle-float 4s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Grid Background for Medical Viewfinder */

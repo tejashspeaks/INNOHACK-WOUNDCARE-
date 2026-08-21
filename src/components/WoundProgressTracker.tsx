@@ -3056,22 +3056,35 @@ export const WoundProgressTracker: React.FC<WoundProgressTrackerProps> = ({
       )}
 
       {/* Modal: Add New Daily Progress Checkpoint with Automatic VLM Analysis */}
-      {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-[28px] p-6 max-w-lg w-full text-[#2c2c2c] border border-[#e2dfd5] shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            
-            <div className="flex items-center justify-between border-b border-[#e2dfd5] pb-3">
-              <h3 className="text-base font-serif font-bold text-[#5A5A40] flex items-center gap-2">
-                <Camera className="w-5 h-5 text-[#5A5A40]" />
-                <span>Log Daily Wound Follow-Up Scan</span>
-              </h3>
-              <button
-                onClick={() => setShowAddModal(false)}
-                className="text-[#8e8b82] hover:text-[#2c2c2c] text-sm font-bold cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
+      <AnimatePresence>
+        {showAddModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0, y: 12 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.94, opacity: 0, y: 12 }}
+              transition={{ type: 'spring', stiffness: 360, damping: 28 }}
+              className="bg-white rounded-[28px] p-6 max-w-lg w-full text-[#2c2c2c] border border-[#e2dfd5] shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto"
+            >
+              
+              <div className="flex items-center justify-between border-b border-[#e2dfd5] pb-3">
+                <h3 className="text-base font-serif font-bold text-[#5A5A40] flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-[#5A5A40]" />
+                  <span>Log Daily Wound Follow-Up Scan</span>
+                </h3>
+                <button
+                  onClick={() => setShowAddModal(false)}
+                  className="text-[#8e8b82] hover:text-[#2c2c2c] text-sm font-bold cursor-pointer"
+                >
+                  ✕
+                </button>
+              </div>
 
             {/* Quick Test Fixture Presets */}
             <div className="space-y-1.5 p-3 rounded-2xl bg-[#f9f8f5] border border-[#e2dfd5]">
@@ -3266,29 +3279,43 @@ export const WoundProgressTracker: React.FC<WoundProgressTrackerProps> = ({
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+    </AnimatePresence>
 
       {/* Modal: Edit Existing Daily Progress Checkpoint */}
-      {showEditModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-[28px] p-6 max-w-lg w-full text-[#2c2c2c] border border-[#e2dfd5] shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-3 border-b border-[#e2dfd5]">
-              <div className="flex items-center gap-2">
-                <Edit3 className="w-5 h-5 text-[#5A5A40]" />
-                <h3 className="font-serif font-bold text-lg text-[#5A5A40]">
-                  Edit Checkpoint Day {editDayNumber}
-                </h3>
+      <AnimatePresence>
+        {showEditModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.94, opacity: 0, y: 12 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.94, opacity: 0, y: 12 }}
+              transition={{ type: 'spring', stiffness: 360, damping: 28 }}
+              className="bg-white rounded-[28px] p-6 max-w-lg w-full text-[#2c2c2c] border border-[#e2dfd5] shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-[#e2dfd5]">
+                <div className="flex items-center gap-2">
+                  <Edit3 className="w-5 h-5 text-[#5A5A40]" />
+                  <h3 className="font-serif font-bold text-lg text-[#5A5A40]">
+                    Edit Checkpoint Day {editDayNumber}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  className="text-[#8e8b82] hover:text-[#333] p-1 rounded-full text-sm font-bold cursor-pointer"
+                >
+                  ✕
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowEditModal(false)}
-                className="text-[#8e8b82] hover:text-[#333] p-1 rounded-full text-sm font-bold cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
 
             <form onSubmit={handleSaveEditedLog} className="space-y-4 text-xs">
               {/* Day & Date */}
@@ -3460,9 +3487,10 @@ export const WoundProgressTracker: React.FC<WoundProgressTrackerProps> = ({
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+    </AnimatePresence>
 
     </div>
   );
