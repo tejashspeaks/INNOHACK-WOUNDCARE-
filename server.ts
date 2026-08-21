@@ -129,9 +129,16 @@ STAGE 1 — VISUAL FEATURE EXTRACTION (WOUND_PRESENT only)
 ═══════════════════════════════════════
 Extract, independent of age:
 - wound_type (abrasion, laceration, puncture, burn, abscess/infection, bite, rash/dermatitis, bruise, ulcer, other)
-- visual_markers (list: erythema, crusting, exudate, swelling, necrosis, bleeding, foreign body, etc.)
+- visual_markers (list: erythema, crusting, exudate, swelling, necrosis, bleeding, foreign body, granulation, epithelialization, etc.)
 - estimated_size_cm (use any visible reference object/coin for scale; if none, state "unscaled_estimate")
 - severity_grade: minor | moderate | severe | emergency
+- infection_risk_score: integer 0-100 reflecting current visual infection bioburden:
+  * 70-95: Acute infected wound, extensive purulence/pus, spreading peri-wound erythema, slough, or foul maceration.
+  * 35-65: Fresh acute traumatic open wound with standard inflammatory exudate and raw margins.
+  * 15-30: Granulating / proliferative healing wound with healthy pink/red vascular beds, resolving erythema, contracting edges.
+  * 5-15: Clean re-epithelializing wound, intact dry crust, or closed scarring with no infection signs.
+  * 0: Intact healthy skin.
+- granulation_percent: integer 0-100 reflecting percentage coverage of clean vascular granulation tissue in wound bed.
 - differential_etiologies: top 3, each with a posterior_probability (must sum to ≤100%, do not force to exactly 100 — allow "unclassified" remainder)
 
 Ground every claim in visible evidence. If a feature is not visibly determinable, mark it "indeterminate" rather than guessing — do not let this lower your confidence score globally, only for that specific field.
@@ -192,6 +199,8 @@ Return ONLY this JSON (no markdown fences, no commentary):
     "disclaimer": "Supplementary comfort measure only. Does not replace emergency care, tetanus prophylaxis, or antibiotic treatment where indicated."
   },
   "diet_hydration_advisory": {"eat": ["..."], "avoid": ["..."], "hydration": "...", "rest": "..."},
+  "infection_risk_score": <0-100 integer>,
+  "granulation_percent": <0-100 integer>,
   "recheck_window": "<e.g. '24-48h' for child, '48-72h' for adult>"
 }
 
@@ -529,8 +538,22 @@ SELF-CHECK BEFORE RETURNING (run silently, do not output this check)
             ta: isNoWound ? 'இரத்தப்போக்கு இல்லை.' : volumeMl > 250 ? 'அதிக இரத்த இழப்பு.' : 'குறைந்த இரத்தப்போக்கு.'
           }
         },
-        infectionRisk: isNoWound ? 'Low' : (rawSeverity === 'Severe' ? 'High' : 'Moderate'),
-        infectionRiskScore: isNoWound ? 0 : (rawSeverity === 'Severe' ? 78 : rawSeverity === 'Moderate' ? 42 : 18),
+        infectionRisk: isNoWound 
+          ? 'Low' 
+          : (typeof parsedJSON.infection_risk_score === 'number'
+              ? (parsedJSON.infection_risk_score >= 60 ? 'High' : parsedJSON.infection_risk_score >= 25 ? 'Moderate' : 'Low')
+              : (rawSeverity === 'Severe' ? 'High' : rawSeverity === 'Moderate' ? 'Moderate' : 'Low')),
+        infectionRiskScore: isNoWound 
+          ? 0 
+          : (typeof parsedJSON.infection_risk_score === 'number'
+              ? Math.max(0, Math.min(100, Math.round(parsedJSON.infection_risk_score)))
+              : (typeof parsedJSON.infectionRiskScore === 'number'
+                  ? Math.max(0, Math.min(100, Math.round(parsedJSON.infectionRiskScore)))
+                  : (rawSeverity === 'Severe' 
+                      ? ((vlmWoundPresent?.visual_markers || []).some(m => m.toLowerCase().includes('granulat') || m.toLowerCase().includes('pink') || m.toLowerCase().includes('epithel')) ? 45 : 75)
+                      : rawSeverity === 'Moderate' 
+                      ? ((vlmWoundPresent?.visual_markers || []).some(m => m.toLowerCase().includes('granulat') || m.toLowerCase().includes('crust')) ? 26 : 42)
+                      : 14))),
         infectionVisualCues: isNoWound ? ['Normal epidermal barrier'] : (vlmWoundPresent?.visual_markers || ['Local Erythema', 'Tissue Breach']),
         tetanusRiskDetected: isNoWound ? false : (detectedClass === 'Puncture' || detectedClass === 'Laceration' || detectedClass === 'Avulsion'),
         triageSummary: {
